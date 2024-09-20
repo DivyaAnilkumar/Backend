@@ -6,15 +6,15 @@ app.use(morgan('dev'));
 
 
 
-app.set('view engine','ejs');
-app.set('views',__dirname+'/views');
+app.set('view engine','ejs');// set view engine or template engine as ejs -html markup run
+app.set('views',__dirname+'/views');//first views is keyword
 
-app.use(express.static('public'));
+app.use(express.static('public'));//pdf ,document,css,images,js files are static .public - foldername.
 const nav= [
     {
-        link:'employee',name:'Home'
+        link:'/user/employee',name:'Home'
     },{
-        link:'employeeform',name:'ADD Employee'
+        link:'/user/employeeform',name:'ADD Employee'
     }
 ]
 
