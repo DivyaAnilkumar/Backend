@@ -28,7 +28,8 @@ router.get('/',async(req,res)=>{
         res.status(201).render("employee",{
             title:'Employee',
             nav,
-            data
+            data,
+           
             
         })
         
@@ -55,6 +56,40 @@ router.get('/employeeAdd',async(req,res)=>{
     }
 });
 
+//for  update
+router.get('/employeeUpdate/:id',async(req,res)=>{
+    try {
+        const id = req.params.id;
+        const data = await employeeModel.findById(id);
+        res.status(201).render("employeeUpdate",{
+            title:'EmployeeAdd',
+            nav,
+            data
+         })
+        console.log(data);
+        
+    } catch (error) {
+        res.render(error);
+        res.status(404).send('Data not found');
+    }
+});
+
+
+//updation
+router.post('/editEmployee/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updatedEmployee = await employeeModel.findByIdAndUpdate(id, req.body, { new: true });
+        res.redirect('/employees'); // Redirect to the employee list or another page after update
+    } catch (error) {
+        res.status(500).send('Error updating employee details');
+    }
+});
+
+
+
+
+
 
 
 router.post('/addEmployee',async(req,res)=>{
@@ -69,15 +104,15 @@ router.post('/addEmployee',async(req,res)=>{
     }
 })
 
-router.put('/editEmployee/:id',async(req,res)=>{
-    try {
-        const id = req.params.id;
-        const data = await employeeModel.findByIdAndUpdate(id,req.body);
-        res.status(200).send('Update successful');
-    } catch (error) {
-       res.status(404).send(error); 
-    }
-})
+// router.put('/editEmployee/:id',async(req,res)=>{
+//     try {
+//         const id = req.params.id;
+//         const data = await employeeModel.findByIdAndUpdate(id,req.body);
+//         res.status(200).send('Update successful');
+//     } catch (error) {
+//        res.status(404).send(error); 
+//     }
+// })
 
 router.delete('/deleteEmployee/:id',async(req,res)=>{
     try {
